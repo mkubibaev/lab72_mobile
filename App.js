@@ -1,23 +1,19 @@
 import React from 'react';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from "redux";
+import thunkMiddleware from 'redux-thunk';
 import Dishes from "./src/containers/Dishes/Dishes";
-import {View, StyleSheet} from 'react-native';
-import Header from "./src/components/Header/Header";
+import dishesReducer from "./src/store/reducers/dishesReducer";
+
+const store = createStore(dishesReducer, applyMiddleware(thunkMiddleware));
 
 export default class App extends React.Component {
     render() {
         return (
-            <View style={styles.wrapper}>
-                <Header/>
+            <Provider store={store}>
                 <Dishes/>
-            </View>
+            </Provider>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        display: 'flex',
-        flex: 1
-    }
-});
 

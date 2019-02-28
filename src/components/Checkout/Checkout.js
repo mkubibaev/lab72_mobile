@@ -1,26 +1,36 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-const Checkout = () => {
+const Checkout = props => {
     return (
         <View style={styles.checkout}>
-            <Text style={styles.checkoutText}>Total price: 000 KGS</Text>
-            <Button style={styles.btn} title="Checkout" onPress={() => console.log('Checkout')}/>
+            <Text style={styles.checkoutText}>Order total: {props.orderTotal} KGS</Text>
+            <TouchableOpacity style={styles.btn} onPress={props.pressed}>
+                <Text>Checkout</Text>
+            </TouchableOpacity>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     checkout: {
-        paddingVertical: 20,
+        paddingVertical: 15,
         paddingHorizontal: 10,
-        backgroundColor: 'yellow'
+        backgroundColor: '#a0000f',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     checkoutText:  {
-        fontSize: 20,
+        fontSize: 24,
+        color: '#fff'
     },
     btn: {
-
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        backgroundColor: '#eee',
+        borderWidth: 1,
+        borderColor: '#781E27',
     }
 });
 
