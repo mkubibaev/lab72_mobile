@@ -21,10 +21,10 @@ const OrderConfirm = props => {
                             orders = (
                                 <View key={dishId} style={styles.modalDish}>
 
-                                    <Text>{props.dishes[dishId].name}</Text>
-                                    <Text>x {props.orders[dishId]}</Text>
-                                    <Text>{props.dishes[dishId].price * props.orders[dishId]} KGS</Text>
-                                    <Text onPress={() => props.onRemove(dishId, props.dishes[dishId].price)}>
+                                    <Text style={styles.modalText}>{props.dishes[dishId].name}</Text>
+                                    <Text style={styles.modalText}>x {props.orders[dishId]}</Text>
+                                    <Text style={styles.modalDishes}>{props.dishes[dishId].price * props.orders[dishId]} KGS</Text>
+                                    <Text style={styles.modalText} onPress={() => props.onRemove(dishId, props.dishes[dishId].price)}>
                                         Delete
                                     </Text>
                                 </View>
@@ -35,8 +35,8 @@ const OrderConfirm = props => {
 
                     {props.orderTotal ?
                         <View style={styles.modalPrice}>
-                            <Text>Delivery: {props.delivery} KGS</Text>
-                            <Text>Total Price: {props.delivery + props.orderTotal} KGS</Text>
+                            <Text style={styles.modalPrice}>Delivery: {props.delivery} KGS</Text>
+                            <Text style={styles.modalPrice}>Total Price: {props.delivery + props.orderTotal} KGS</Text>
                         </View>
                         : <Text>Nothing selected</Text>
                     }

@@ -50,17 +50,21 @@ export default styles = StyleSheet.create({
         paddingTop: 30,
         paddingBottom: 10,
         paddingHorizontal: 10,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     modalTitle: {
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20
     },
     modalBtn: {
         marginBottom: 5,
         textAlign: 'center',
-        backgroundColor: 'red'
+        backgroundColor: '#17a2b8',
+        fontSize: 20,
+        color: '#fff',
+        borderColor: '#17a2b8',
+        paddingVertical: 10,
     },
     modalDish : {
         marginBottom: 5,
@@ -68,6 +72,16 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     modalPrice: {
-        marginTop: 30
+        marginTop: 30,
+        fontWeight: 'bold',
+        fontSize: 20,
+
+    },
+    modalDishes: {
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+    modalText: {
+        fontSize: 20,
     }
 });
