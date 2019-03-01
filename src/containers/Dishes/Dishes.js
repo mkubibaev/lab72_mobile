@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, FlatList, Text, TouchableOpacity, Image, Modal} from 'react-native'
+import {View, FlatList, Text, TouchableOpacity, Image, ActivityIndicator} from 'react-native'
 import Checkout from "../../components/Checkout/Checkout";
 import {connect} from "react-redux";
 import styles from '../../styles';
@@ -9,7 +9,8 @@ import OrderConfirm from "../../components/OrderConfirm/OrderConfirm";
 
 class Dishes extends Component {
     state = {
-        showModal: false
+        showModal: false,
+        refresh: false,
     };
 
     componentDidMount() {
@@ -18,6 +19,10 @@ class Dishes extends Component {
 
     toggleModal = () => {
         this.setState({showModal: !this.state.showModal})
+    };
+
+    pullToRefresh = () => {
+        this.props.fetchDishes();
     };
 
     orderHandler = orderData => {
@@ -38,9 +43,16 @@ class Dishes extends Component {
     };
 
     render() {
-        return (
+
+        if (this.props.error) {
+            return <Text>{this.props.error}</Text>
+        }
+
+        const dishesMenu = (
             <View style={styles.container}>
                 <FlatList
+                    refreshing={this.state.refresh}
+                    onRefresh={() => this.pullToRefresh()}
                     data={this.convertToArr(this.props.dishes)}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => (
@@ -75,6 +87,11 @@ class Dishes extends Component {
                 />
             </View>
         );
+
+
+        return this.props.loading ? <ActivityIndicator style={styles.loader} size="large" />
+            : dishesMenu;
+
     }
 }
 
@@ -83,6 +100,7 @@ const mapStateToProps = state => ({
     orders: state.order.orders,
     delivery: state.order.delivery,
     orderTotal: state.order.orderTotal,
+    loading: state.dishes.loading
 });
 
 const mapDispatchToProps = dispatch => ({

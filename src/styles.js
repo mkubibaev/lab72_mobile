@@ -14,7 +14,7 @@ export default styles = StyleSheet.create({
     },
     dishName: {
         color: '#fff',
-        fontSize: 30,
+        fontSize: 24,
         marginBottom: 5
     },
     dishPrice: {
@@ -75,7 +75,6 @@ export default styles = StyleSheet.create({
         marginTop: 30,
         fontWeight: 'bold',
         fontSize: 20,
-
     },
     modalDishes: {
         fontWeight: 'bold',
@@ -83,5 +82,8 @@ export default styles = StyleSheet.create({
     },
     modalText: {
         fontSize: 20,
+    },
+    loader: {
+        marginTop: 100,
     }
 });
