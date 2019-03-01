@@ -10,7 +10,14 @@ import OrderConfirm from "../../components/OrderConfirm/OrderConfirm";
 class Dishes extends Component {
     state = {
         showModal: false,
-        refresh: false,
+        refreshDishes: false,
+        customer: {
+            name: '',
+            address: '',
+            phone: ''
+        },
+        canSubmit: false
+
     };
 
     componentDidMount() {
@@ -25,15 +32,35 @@ class Dishes extends Component {
         this.props.fetchDishes();
     };
 
-    orderHandler = orderData => {
+    valueChanged = (text, fieldName) => {
+        const customer = {...this.state.customer};
+        customer[fieldName] = text;
 
+        if (this.state.customer.name !== '' &&
+            this.state.customer.address !== '' &&
+            this.state.customer.phone !== '') {
+
+            this.setState({customer, canSubmit: true})
+        } else {
+
+            this.setState({customer, camSubmit: false})
+        }
+
+
+    };
+
+    orderHandler = orderData => {
         Object.keys(orderData).forEach(id => {
             if (orderData[id] === 0) {
                 delete orderData[id];
             }
         });
 
+        orderData.customer = {...this.state.customer};
         this.props.createOrder(orderData).then(this.toggleModal);
+
+        const customer = {name: '', address: '', phone: ''};
+        this.setState({customer, canSubmit: false});
     };
 
     convertToArr = obj => {
@@ -51,7 +78,7 @@ class Dishes extends Component {
         const dishesMenu = (
             <View style={styles.container}>
                 <FlatList
-                    refreshing={this.state.refresh}
+                    refreshing={this.state.refreshDishes}
                     onRefresh={() => this.pullToRefresh()}
                     data={this.convertToArr(this.props.dishes)}
                     keyExtractor={item => item.id}
@@ -83,6 +110,9 @@ class Dishes extends Component {
                     onToggleModal={this.toggleModal}
                     delivery={this.props.delivery}
                     orderTotal={this.props.orderTotal}
+                    customer={this.state.customer}
+                    valueChanged={this.valueChanged}
+                    canSubmit={this.state.canSubmit}
                     onConfirm={() => this.orderHandler(this.props.orders)}
                 />
             </View>

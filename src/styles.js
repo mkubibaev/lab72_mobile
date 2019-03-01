@@ -57,24 +57,18 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20
     },
-    modalBtn: {
-        marginBottom: 5,
-        textAlign: 'center',
-        backgroundColor: '#17a2b8',
-        fontSize: 20,
-        color: '#fff',
-        borderColor: '#17a2b8',
-        paddingVertical: 10,
-    },
     modalDish : {
         marginBottom: 5,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    modalPrice: {
+    modalPrices: {
         marginTop: 30,
+    },
+    modalPrice: {
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 18,
+        marginBottom: 5
     },
     modalDishes: {
         fontWeight: 'bold',
@@ -85,5 +79,19 @@ export default styles = StyleSheet.create({
     },
     loader: {
         marginTop: 100,
+    },
+    form: {
+        marginTop: 30
+    },
+    formTitle: {
+        fontSize: 18,
+        marginBottom: 5
+    },
+    input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        paddingHorizontal: 5,
+        marginBottom: 5
     }
 });
