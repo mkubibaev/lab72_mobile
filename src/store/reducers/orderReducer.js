@@ -1,4 +1,4 @@
-import {ADD_DISH, FETCH_DISHES_SUCCESS, REMOVE_DISH} from "../actions/actionTypes";
+import {ADD_DISH, FETCH_DISHES_SUCCESS, REMOVE_DISH, RESET_ORDER} from "../actions/actionTypes";
 
 const DELIVERY_PRICE = 150;
 
@@ -8,10 +8,10 @@ const initialState = {
     orderTotal: 0,
 };
 
-const setCart = (dishes) => {
+const setCart = obj => {
     const orders = {};
 
-    Object.keys(dishes).forEach(id => {
+    Object.keys(obj).forEach(id => {
         orders[id] = 0;
     });
 
@@ -21,6 +21,7 @@ const setCart = (dishes) => {
 const orderReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_DISHES_SUCCESS:
+
             return {
                 ...state,
                 orders: setCart(action.dishes)
@@ -44,6 +45,13 @@ const orderReducer = (state = initialState, action) => {
                     [action.id]: state.orders[action.id] - 1
                 },
                 orderTotal: state.orderTotal - parseFloat(action.price)
+            };
+
+        case RESET_ORDER:
+            return {
+                ...state,
+                orders: setCart(state.orders),
+                orderTotal: 0
             };
 
         default:

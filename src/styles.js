@@ -26,11 +26,6 @@ export default styles = StyleSheet.create({
         height: 100,
         marginRight: 10
     },
-    modalTitle: {
-        fontSize: 30,
-        fontWeight: 'bold',
-
-    },
     checkout: {
         paddingVertical: 15,
         paddingHorizontal: 10,
@@ -49,5 +44,30 @@ export default styles = StyleSheet.create({
         backgroundColor: '#eee',
         borderWidth: 1,
         borderColor: '#781E27',
+    },
+    modal: {
+        flex: 1,
+        paddingTop: 30,
+        paddingBottom: 10,
+        paddingHorizontal: 10,
+        justifyContent: 'space-between'
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20
+    },
+    modalBtn: {
+        marginBottom: 5,
+        textAlign: 'center',
+        backgroundColor: 'red'
+    },
+    modalDish : {
+        marginBottom: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    modalPrice: {
+        marginTop: 30
     }
 });

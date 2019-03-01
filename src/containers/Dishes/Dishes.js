@@ -4,7 +4,7 @@ import Checkout from "../../components/Checkout/Checkout";
 import {connect} from "react-redux";
 import styles from '../../styles';
 import {fetchDishes} from "../../store/actions/dishesActions";
-import {addDish, removeDish} from "../../store/actions/orderActions";
+import {addDish, createOrder, removeDish} from "../../store/actions/orderActions";
 import OrderConfirm from "../../components/OrderConfirm/OrderConfirm";
 
 class Dishes extends Component {
@@ -18,6 +18,17 @@ class Dishes extends Component {
 
     toggleModal = () => {
         this.setState({showModal: !this.state.showModal})
+    };
+
+    orderHandler = orderData => {
+
+        Object.keys(orderData).forEach(id => {
+            if (orderData[id] === 0) {
+                delete orderData[id];
+            }
+        });
+
+        this.props.createOrder(orderData).then(this.toggleModal);
     };
 
     convertToArr = obj => {
@@ -60,6 +71,7 @@ class Dishes extends Component {
                     onToggleModal={this.toggleModal}
                     delivery={this.props.delivery}
                     orderTotal={this.props.orderTotal}
+                    onConfirm={() => this.orderHandler(this.props.orders)}
                 />
             </View>
         );
@@ -76,7 +88,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     fetchDishes: () => dispatch(fetchDishes()),
     addDish: (id, price) => dispatch(addDish(id, price)),
-    removeDish: (id, price) => dispatch(removeDish(id, price))
+    removeDish: (id, price) => dispatch(removeDish(id, price)),
+    createOrder: orderData => dispatch(createOrder(orderData))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dishes);
