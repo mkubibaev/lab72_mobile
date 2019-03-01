@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import {View, FlatList, Text, StyleSheet, TouchableOpacity, Image, Modal} from 'react-native'
+import {View, FlatList, Text, TouchableOpacity, Image, Modal} from 'react-native'
 import Checkout from "../../components/Checkout/Checkout";
 import {connect} from "react-redux";
+import styles from '../../styles';
 import {fetchDishes} from "../../store/actions/dishesActions";
+import {addDish, removeDish} from "../../store/actions/orderActions";
+import OrderConfirm from "../../components/OrderConfirm/OrderConfirm";
 
 class Dishes extends Component {
     state = {
@@ -17,14 +20,23 @@ class Dishes extends Component {
         this.setState({showModal: !this.state.showModal})
     };
 
+    convertToArr = obj => {
+        return Object.keys(obj).map(id => {
+            return {...obj[id], id};
+        });
+    };
+
     render() {
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={this.props.dishes}
+                    data={this.convertToArr(this.props.dishes)}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => (
-                        <TouchableOpacity style={styles.dish}>
+                        <TouchableOpacity
+                            style={styles.dish}
+                            onPress={() => this.props.addDish(item.id, item.price)}
+                        >
                             <Image
                                 style={styles.dishImg}
                                 source={{uri: item.image}}
@@ -40,63 +52,31 @@ class Dishes extends Component {
                     pressed={this.toggleModal}
                     orderTotal={this.props.orderTotal}
                 />
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.showModal}
-                    onRequestClose={() => {}}
-                    >
-                    <View style={{marginTop: 22}}>
-                        <View>
-                            <Text>Hello World!</Text>
-
-                            <TouchableOpacity onPress={this.toggleModal}>
-                                <Text style={{color: 'red'}}>Hide Modal</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                <OrderConfirm
+                    show={this.state.showModal}
+                    orders={this.props.orders}
+                    dishes={this.props.dishes}
+                    onRemove={this.props.removeDish}
+                    onToggleModal={this.toggleModal}
+                    delivery={this.props.delivery}
+                    orderTotal={this.props.orderTotal}
+                />
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        paddingTop: 30,
-        flex: 1,
-        backgroundColor: '#000'
-    },
-    dish: {
-        marginBottom: 10,
-        backgroundColor: "#781E27",
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    dishName: {
-        color: '#fff',
-        fontSize: 30,
-        marginBottom: 5
-    },
-    dishPrice: {
-        color: '#fff',
-        fontSize: 20
-    },
-    dishImg: {
-        width: 100,
-        height: 100,
-        marginRight: 10
-    }
-});
-
 const mapStateToProps = state => ({
-    dishes: state.dishes,
-    delivery: state.delivery,
-    orderTotal: state.orderTotal,
+    dishes: state.dishes.dishes,
+    orders: state.order.orders,
+    delivery: state.order.delivery,
+    orderTotal: state.order.orderTotal,
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchDishes: () => dispatch(fetchDishes())
+    fetchDishes: () => dispatch(fetchDishes()),
+    addDish: (id, price) => dispatch(addDish(id, price)),
+    removeDish: (id, price) => dispatch(removeDish(id, price))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dishes);

@@ -1,4 +1,4 @@
-import {FETCH_DISHES_FAILURE, FETCH_DISHES_REQUEST, FETCH_DISHES_SUCCESS} from "./actionTypes";
+import {ADD_DISH, FETCH_DISHES_FAILURE, FETCH_DISHES_REQUEST, FETCH_DISHES_SUCCESS} from "./actionTypes";
 import axios from '../../axios-dishes';
 
 export const fetchDishesRequest = () => ({type: FETCH_DISHES_REQUEST});
@@ -15,8 +15,4 @@ export const fetchDishes = () => {
             dispatch(fetchDishesFailure(error));
         });
     }
-};
-
-export const addDish = id => {
-
 };
